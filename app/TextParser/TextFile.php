@@ -13,11 +13,12 @@ class TextFile
     {
         return [
             'file_path' => $file_path,
-            'file_location' => Storage::path($file_path),
+            'file_location' => Storage::disk('public')->path($file_path),
+            'file_url' => Storage::disk('public')->url($file_path),
+            'mime_type' => Storage::disk('public')->mimeType($file_path),
+            'size' => Storage::disk('public')->size($file_path),
             'file_modified' => $file_path . '_modified',
-            'file_url' => Storage::url($file_path),
-            'mime_type' => Storage::mimeType($file_path),
-            'size' => Storage::size($file_path),
+            'file_modified_url' => Storage::disk('public')->url($file_path . '_modified'),
             //'content_raw' => Storage::get($file_path),
         ];
     }
@@ -42,7 +43,7 @@ class TextFile
         $handle = fopen($file['file_location'], "r");
 
         if(!$handle || !$analysis['word_count']) {
-            Storage::put($file['file_modified'], '');
+            Storage::disk('public')->put($file['file_modified'], '');
             return false;
         }
 
@@ -57,11 +58,11 @@ class TextFile
                 $replacement = $left . $original_word . $right;
                 $line = substr_replace($line, $replacement, $start, $word_length);
             }
-            file_put_contents(Storage::path($file['file_modified']), $line, FILE_APPEND); // Laravels Storage::append is too slow
+            file_put_contents(Storage::disk('public')->path($file['file_modified']), $line, FILE_APPEND); // Laravels Storage::append is too slow
         }
 
         fclose($handle);
 
-        return true;
+        return $left . $analysis['most_common_word'] . $right;
     }
 }

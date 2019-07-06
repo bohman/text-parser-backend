@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\TextParser\TextFile;
+use App\TextParser\TextAnalysis;
+use Illuminate\Support\Facades\Storage;
 
-class AnalyzeController extends Controller
+class AnalysisController extends Controller
 {
     
     /**
@@ -21,30 +24,28 @@ class AnalyzeController extends Controller
      * @TODO: This works decently for smaller files, but if we want to handle
      *        really large files we need to implement a queue.
      */
-    public static function parseText(Request $request)
+    public static function create(Request $request)
     {
 
         $request->validate([
             'upload' => 'required',
         ]);
 
-        $file_path = $request->upload->store('uploads');
+        $file_path = $request->upload->store('uploads', ['disk' => 'public']);
 
         $file = TextFile::getFileInformation($file_path);
 
         $analysis = TextAnalysis::analyzeFile($file);
 
-        TextFile::surroundMostCommonWordInFile($file, $analysis, 'foo', 'bar');
-
-        $modified_text = Storage::get($file['file_modified']);
+        $changes = TextFile::surroundMostCommonWordInFile($file, $analysis, 'foo', 'bar');
 
         $output = [
             'file' => $file,
             'analysis' => $analysis,
-            'modified_text' => $modified_text,
+            'modified_text' => Storage::disk('public')->get($file['file_modified']),
+            'modified_changes' => $changes,
         ];
 
-        dd($output);
         return response()->json($output);
     }
 }

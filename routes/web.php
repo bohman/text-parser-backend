@@ -11,6 +11,4 @@
 |
 */
 
-Route::get('/', 'AnalyzeController@index')->name('analyze.index');
-
-Route::post('/parse-text', 'AnalyzeController@parseText')->name('analyze.create');
+Route::get('/', 'AnalysisController@index')->name('analyze.index');

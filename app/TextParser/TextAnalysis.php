@@ -30,7 +30,7 @@ class TextAnalysis
      */
     public static function analyzeFile($file = [])
     {
-        $file_content = Storage::get($file['file_path']);
+        $file_content = Storage::disk('public')->get($file['file_path']);
         $content_normalized = Self::normalizeString($file_content);
         $all_words = str_word_count($content_normalized, 1);
         $unique_words = array_unique($all_words);
