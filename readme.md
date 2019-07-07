@@ -5,7 +5,7 @@ This is a small demonstration. It's an API that exposes a single endpoint:
 
 - /api/analysis/create
 
-This endpoint accepts post requests containing a single field: a file upload. It should be named _upload_. If you upload a text file we attempt to figure out the most common word, surround it with _foo_ and _bar_, and hand it back to you in a json object.
+This endpoint accepts post requests containing a single field: a file upload. It should be named _upload_. If you upload a text file we attempt to figure out the most common word, surround it with _foo_ and _bar_, and hand it back to you as json.
 
 The returned json has this format:
 
@@ -45,8 +45,10 @@ Part of that is composer, PHPs package manager:
 Once you've got that taken care of, follow these steps:
 
 - Clone the repository
-- run `composer install`
-- copy `.env.example` to `.env`
+- Run `composer install`
+- Copy `.env.example` to `.env`
+- Change `APP_URL` in .env to your URL
+- Run `php artisan key:generate`
 - Ensure `storage` and `bootstrap/cache` are writeable
 
 And that should be it!
@@ -70,5 +72,10 @@ And the two repos for this app can be found here:
 
 - https://github.com/bohman/text-parser-backend
 - https://github.com/bohman/text-parser-frontend
+
+Live demos for frontend and backend can be found here:
+
+- http://text-parser.linusbohman.se
+- http://text-parser-backend.linusbohman.se
 
 Cheers! I hope you're having a great day!
