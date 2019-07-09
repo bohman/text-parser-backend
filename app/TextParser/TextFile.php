@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Storage;
 class TextFile
 {
     /**
-     * 
+     * Returns useful information about a file by using
+     * Laravel's built in Storage function. Just utility, really.
      */
     public static function getFileInformation($file_path = '')
     {
@@ -24,16 +25,11 @@ class TextFile
     }
 
     /**
-     * This might seem unnecessary compared to writing a simple regexp to replace all
-     * occurrences of a substring. Here's the resoning behind the approach:
+     * Streams a file, finds the occurrences of $analysis['most_common_word'] line by line,
+     * surrounds it with $left and $right, and writes the line to a new file.
      * 
-     * If there's anything I've learned from studying linguistics it's that language is incredibly
-     * irregular. Rules, sure, but they're not always followed and is considered a description
-     * at best. That means it's tricky to write a regexp that can accurately surround words with
-     * characters since there's always a risk that we're catching common substrings in words
-     * ("the" in "brother") or forget spacing, interpunctuation and capitalization (" The ", " the!", " the.")
-     * and other edge cases we can't even dream of. However, since PHP can pretty accurately map all
-     * occurrences of a word, we're using that to bypass the majority of this problem.
+     * Why streaming, you might ask? Because if we try to hold it in memory we time out on
+     * larger files.
      * 
      * @TODO: PHP is not the best tool for input/output. We could offload this to
      *        bash with sed, for instance.

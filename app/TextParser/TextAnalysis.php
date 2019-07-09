@@ -26,7 +26,8 @@ class TextAnalysis
     }
 
     /**
-     * 
+     * Returns an array with various quantifiable data about
+     * our file.
      */
     public static function analyzeFile($file = [])
     {

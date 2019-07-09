@@ -12,7 +12,8 @@ class AnalysisController extends Controller
     
     /**
      * index
-     * When we want to use the built in frontend
+     * 
+     * Provides a simple form to post a file to the backend.
      */
     public static function index() {
         return view('pages.index');
