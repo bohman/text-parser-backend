@@ -61,6 +61,7 @@ You can always make an app like this better. I stopped here, since I felt it dem
 - Queues. We currently do our analysis on a request. It works when we're dealing with smaller files, but larger will definitely time out. We can get around that by queueing them all and processing them in the background and send the user an e-mail when we're done.
 - Error handling. We don't really give useful and well formatted errors right now.
 - Improving the analysis. The tokenization isn't awesome, and that's what we base our entire analysis on. There are algorithms and stemming that helps with this, and with some research they could be implemented pretty easily, I think.
+- Tests. There are none right now.
 
 ## Wait, who are you again?
 
